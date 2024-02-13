@@ -1,0 +1,152 @@
+*----------------------------
+Format d'une ligne de code : 
+*----------------------------
+
+
+
+Position 1 à 6 = Champs de numerotation de séquence ( peu utilisé aujourdhui )
+
+Position 7 = Champs indicateur. D = debbug, * OU *> pour indiquer une ligne de commentaire, - pour indiquer une conitunation de ligne. 
+
+Position 8 à 11 ( ZONE A) = Zone utilisé pour les entête de divisions, sections, paragraphe, numéro de niveaux hiérarchique. Exemples : DATA DIVISION, FILE SECTION...
+
+
+Position 12 à 72 ( ZONE B) = Zone qui contient les instrcution cobol. Tout ce qui est ecrit dans la procédure division doit commencer dans la zone B. 
+
+
+Position 73 à 80 = Réservé au système qui génère une numerotation à des fins d'identification. On n'y touche pas. 
+
+*----------------------------------------
+Déroulement et découpage d'un programme : 
+*----------------------------------------
+
+
+De manière générale, dans un programme COBOL, on retrouve des divisions. Dans ces divisions, on retrouve des sections. Dans les sections on retrouve des paragraphes, dans les paragraphes des phrases et enfin dans les phrases, on retrouve des declarations ou instructions.
+
+DIVISIONS --> SECTIONS --> PARAGRAPHES --> PHRASES --> DECLARATIONS. 
+
+
+*DECLARATIONS / INSTRUCTION:
+
+Un instruction est une directive unique commençant généralement par un mot clé réservé COBOL comme MOVE, COMPUTE, ADD. Plusieurs instructions peuvent se place au sein d'une même phrase pour exécuter une action. Une phrase COBOL peut donc contenir plusieur instructions. 
+
+exemple : MOVE 18 TO AGE ===> instruction qui a pour but de déplacer la valeur 18 au sein d'une variable 'AGE'
+
+Si cette instruction est la dernière au sein d'un paragraphe, il faut ajouter un "." à la fin de cette instruction. 
+
+
+*PARAGRAPHES : 
+
+Les paragraphes sont définis par l'utilisateur dans le but de créer une structure de programme. En règle générale, un paragraphe représente une action spécifique composé d'étapes plus petites ( des phrases). 
+On peut donc appeller un paragraphe par son nom autant de fois qu'on le souhaite à partir d'un autre endroit du programme. 
+
+
+* SECTIONS :
+
+Les paragraphes peuvent s'agencer au sein des sections. Il y a plusieurs types de sections, certaines sont définis par les utilisateurs, d'aurtes ont un nom prédéfini. Les sections permettent notamment d'améliorer la structure générale du programme et assurent le bon fonctionnement du programme. 
+
+
+
+* DIVISION : 
+
+Il existe 4 grandes divisions en programmation COBOL : 
+
+IDENTIFICATION DIVISION : nom du programme, l'auteur, la dete d'ecriture etc..
+
+ENVIRONMENT DIVISION : preciser l'environnement informatique sur lequel le programme est compilé
+
+DATA DIVISION : definir l'ensemble des données qui serton utilisées dans le programme. 
+
+PROCEDURE DIVISION : contient la logique générale du code dans lequel on retrouve l'ensemble des instructions. 
+
+
+*----------------------------------------
+DÉTAILS DES DIVISIONS : 
+*----------------------------------------
+
+**IDENTIFICATION DIVISION** 
+
+C'est la première division de chaque programme COBOL. Elle designe le nom du programme, ainsi que d'autres élements pour identifier le programme de manière unique. Nom de l'auteur et des informations optionnelles comme : INSTALATION, DATE WRITTEN, DATE COMPILED et SECURITY 
+
+
+exemple : 
+
+IDENTIFICATION DIVISION.
+PROGRAM-ID exercice.
+AUTHOR.    davidLongBin.
+
+INSTALLATION.
+DATE WRITTEN.
+DATE-COMPILED.
+SECRUTIY. 
+
+NB: Seul l'entête INDENTIFICATION DIVISION et le PROGRAM-ID est obligatoire. le reste est optionnel. 
+
+
+
+
+
+
+**ENVIRONMENT DIVISION :**
+
+L'ENVIRONMENT DIVISION précise l'environnement informatique sur lequel le programme est compilé et exécuté. Au sein de cette division, on y précise également l'organisation des fichiers et des méthodes d'accès utulisées dans le programme. On y retrouve deux grandes sections : 
+
+CONFIGURATION SECTION
+La Configuraiton section décrit l'environnement informatique sur lequel le progamme est compilé et exécuté. Il s'agit d'une section facultative. 
+
+
+INPUT-OUTPUT SECTION
+
+La section INPUT-OUTPUT permet de préciser l'organisation et les méthodes d'accès des fichiers. Cette section va nous permettre de fournir l'ensemble des informations nécessaires à la transmission et à la manipulation des données de fichiers pendant l'exècution du programme. Dans cette section, on va retrouver deux paragraphes très importants : 
+
+FILE-CONTROL
+
+Le paragraphe File-Control contient l'essentiel des informations sur les fichiers que l'on souhaite utuiliser dans un programme. On y retrouve notammemnt des informations concernant l'organisation du fichier, son mode d'accès et la clé primaire. 
+
+exemple : 
+
+
+INPUT-OUTPUT SECTIONS.
+FILE-CONTROL.
+    SELECT F-COMPTE ASSIGN TO INP001.
+    ORGANIZATION IS INDEXED.
+    ACCESS MODE IS INDEXED.
+    RECORD KEY IS CODE-CLE.
+    FILE STATUS IS WS-FS-FCOMPTE.    
+
+
+
+
+I-O CONTROL 
+
+Le paragraphe I-O control définit des évènements qui, s'ils se produisent, provioque la mise en place de points de redémarrage. 
+
+
+
+**  DATA DIVISION :**
+
+
+La data division définit l'ensemble des données qui vont être utilisées dans le programme. Chaque section de la DATA DIVISION possède une fonction logique et spécifique dans un programme COBOL. Cete division comporte 3 sections principales : 
+
+FILE SECTION 
+
+La FILE SECTION permet de définir la structure des fichier de données. On y retrouve généralement la FD : File Description qui va nous permettre de decrire les champs des enregistrements de chaque fichier utulisé par le programme. 
+
+
+
+WORKING-STORAGE SECTION
+
+Cette section permet de definir le nom des variables nécéssaires au traitement des données dans le programme. Au sein de cette section, les variables peuvent être également initialisées avec une valeur de départ. Une zone en mémoire est allouée à tous ces champs de la working storage section à l'exécution du programme, puis désallouée à la fin de cette exécution. 
+
+
+
+LINKAGE SECTION
+
+
+
+** PROCEDURE DIVISION :**
+
+
+Contient tout l'algorithme du programme. 
+
+
